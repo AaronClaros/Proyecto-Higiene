@@ -11,8 +11,9 @@ public class TitleActor extends Actor {
     private BitmapFont font;
     private String text;
 
-    public TitleActor(BitmapFont font){
+    public TitleActor(BitmapFont font, String text){
         this.font = font;
+        this.text = text;
         font.setColor(0,0,0,1);
     }
 

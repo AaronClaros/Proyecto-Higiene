@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mttp.actors.TitleActor;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Kevin on 30/12/2015.
  */
-public class GameScreen extends AbstractScreen {
+public class GameScreen2 extends AbstractScreen {
 
     private Stage stage;
     private long beginTime;
@@ -33,7 +32,7 @@ public class GameScreen extends AbstractScreen {
     private Image imgActor;
     //private ArrayList<ImageButton> buttonList;
 
-    public GameScreen(Main game){
+    public GameScreen2(Main game){
         super(game);
     }
 
@@ -41,14 +40,12 @@ public class GameScreen extends AbstractScreen {
     private void SetupShowStage(){
         texturesList = new ArrayList<Texture>();
 
-        texturesList.add(new Texture("img_1.png"));
-        texturesList.add(new Texture("img_2.png"));
-        texturesList.add(new Texture("img_3.png"));
-        texturesList.add(new Texture("img_4.png"));
-        texturesList.add(new Texture("img_5.png"));
-        texturesList.add(new Texture("img_6.png"));
-        texturesList.add(new Texture("img_7.png"));
-        texturesList.add(new Texture("img_8.png"));
+        texturesList.add(new Texture("img_11.png"));
+        texturesList.add(new Texture("img_12.png"));
+        texturesList.add(new Texture("img_13.png"));
+        texturesList.add(new Texture("img_14.png"));
+        texturesList.add(new Texture("img_15.png"));
+        texturesList.add(new Texture("img_16.png"));
 
         imgActor = new Image(texturesList.get(0));
         stage.addActor(imgActor);
@@ -62,8 +59,6 @@ public class GameScreen extends AbstractScreen {
         titlesList.add("Escupo el agua");
         titlesList.add("Abro el grifo y limpio");
         titlesList.add("Me lavo las manos");
-        titlesList.add("Cierro el grifo");
-        titlesList.add("Me seco las manos");
 
         font = new BitmapFont();
         imageTitle = new TitleActor(font, titlesList.get(0));
