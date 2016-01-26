@@ -2,6 +2,7 @@ package com.mttp.higiene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Kevin on 30/12/2015.
  */
-public class GameScreen extends AbstractScreen {
+public class ToothScreen extends AbstractScreen {
 
     private Stage stage;
     private long beginTime;
@@ -33,7 +34,10 @@ public class GameScreen extends AbstractScreen {
     private Image imgActor;
     //private ArrayList<ImageButton> buttonList;
 
-    public GameScreen(Main game){
+    private ArrayList<Music> soundsList;
+    private boolean soundPlayed;
+
+    public ToothScreen(Main game){
         super(game);
     }
 
@@ -71,6 +75,17 @@ public class GameScreen extends AbstractScreen {
         font.getData().setScale(1f, 1f);
         stage.addActor(imageTitle);
 
+        soundsList = new ArrayList<Music>();
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_1.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_2.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_3.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_4.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_5.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_6.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_7.mp3"))));
+        soundsList.add(Gdx.audio.newMusic((Gdx.files.internal("sound_8.mp3"))));
+        soundPlayed = false;
+
 
     }
     //Metodo para preparar los elemento de la fase de preguntas del juego
@@ -80,6 +95,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         beginTime = TimeUtils.millis();
         actualImgIndex = 0;
         stage = new Stage();
@@ -107,17 +123,27 @@ public class GameScreen extends AbstractScreen {
     private Texture SwapTextureFromArray(ArrayList<Texture> list, int startIndex, long startTime, float intervalTime){
         Texture img = null;
         if(startIndex < list.size()){
+            Music sound = soundsList.get(startIndex);
             if (TimeUtils.timeSinceMillis(startTime)<intervalTime*1000){
                 img = list.get(startIndex);
                 if (startIndex < titlesList.size()){
                     imageTitle.ChangeFontText(titlesList.get(startIndex));
                 }
+                if(!soundPlayed){
+                    System.out.println("Playing music");
+                    sound.play();
+                    soundPlayed = true;
+                }
             }
             else {
-                actualImgIndex++;
-                beginTime=TimeUtils.millis();
-                img = list.get(startIndex);
-                imageTitle.ChangeFontText(titlesList.get(startIndex));
+                if(!sound.isPlaying()){
+                    actualImgIndex++;
+                    beginTime=TimeUtils.millis();
+                    img = list.get(startIndex);
+                    imageTitle.ChangeFontText(titlesList.get(startIndex));
+                    System.out.println("Music finished");
+                    soundPlayed = false;
+                }
             }
         } else {
             img = list.get(texturesList.size()-1);
@@ -149,6 +175,12 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         stage.dispose();
+        for (Texture t: texturesList ) {
+            t.dispose();
+        }
+        for (Music m: soundsList) {
+            m.dispose();
+        }
     }
 
 }

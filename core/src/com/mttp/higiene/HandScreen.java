@@ -2,6 +2,9 @@ package com.mttp.higiene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by Kevin on 30/12/2015.
  */
-public class GameScreen2 extends AbstractScreen {
+public class HandScreen extends AbstractScreen {
 
     private Stage stage;
     private long beginTime;
@@ -32,7 +35,7 @@ public class GameScreen2 extends AbstractScreen {
     private Image imgActor;
     //private ArrayList<ImageButton> buttonList;
 
-    public GameScreen2(Main game){
+    public HandScreen(Main game){
         super(game);
     }
 
@@ -53,19 +56,18 @@ public class GameScreen2 extends AbstractScreen {
 
         titlesList = new ArrayList<String>();
 
-        titlesList.add("Cojo el cepillo");
-        titlesList.add("Me cepillo los dientes");
-        titlesList.add("Me enjuago la boca");
-        titlesList.add("Escupo el agua");
-        titlesList.add("Abro el grifo y limpio");
-        titlesList.add("Me lavo las manos");
+        titlesList.add("Abro el grifo");
+        titlesList.add("Echo Jabon en las manos");
+        titlesList.add("Froto las manos");
+        titlesList.add("Aclaro Las Manos");
+        titlesList.add("Cierro el grifo");
+        titlesList.add("Me seco las manos");
 
         font = new BitmapFont();
         imageTitle = new TitleActor(font, titlesList.get(0));
         SetFontTextCenter(imageTitle,titlesList.get(0));
         font.getData().setScale(1f, 1f);
         stage.addActor(imageTitle);
-
 
     }
     //Metodo para preparar los elemento de la fase de preguntas del juego
@@ -75,6 +77,7 @@ public class GameScreen2 extends AbstractScreen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         beginTime = TimeUtils.millis();
         actualImgIndex = 0;
         stage = new Stage();
@@ -89,7 +92,6 @@ public class GameScreen2 extends AbstractScreen {
         Texture newTexture = SwapTextureFromArray(texturesList, actualImgIndex, beginTime, 3);
         imgActor.setDrawable(new SpriteDrawable(new Sprite(newTexture)));
 
-
         stage.act();
         stage.draw();
 
@@ -102,6 +104,7 @@ public class GameScreen2 extends AbstractScreen {
     private Texture SwapTextureFromArray(ArrayList<Texture> list, int startIndex, long startTime, float intervalTime){
         Texture img = null;
         if(startIndex < list.size()){
+
             if (TimeUtils.timeSinceMillis(startTime)<intervalTime*1000){
                 img = list.get(startIndex);
                 if (startIndex < titlesList.size()){
@@ -144,6 +147,9 @@ public class GameScreen2 extends AbstractScreen {
     @Override
     public void dispose() {
         stage.dispose();
+        for (Texture t: texturesList ) {
+            t.dispose();
+        }
     }
 
 }

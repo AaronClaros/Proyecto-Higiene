@@ -5,14 +5,14 @@ import com.badlogic.gdx.Game;
 
 public class Main extends Game {
 
-	public GameScreen scene1;
-	public GameScreen2 scene2;
+	public ToothScreen scene1;
+	public HandScreen scene2;
     public MainMenu mainScene;
 
 	@Override
 	public void create () {
-		scene1 = new GameScreen(this);
-		scene2 = new GameScreen2(this);
+		scene1 = new ToothScreen(this);
+		scene2 = new HandScreen(this);
         mainScene = new MainMenu(this);
         setScreen( mainScene );
 	}
